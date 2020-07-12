@@ -29,7 +29,6 @@ class App extends React.Component {
           // snapshot.data() contains the user data stored in the firestore DB
           // snapshot.id contains the unique id
           this.setState({ currentUser: { id: snapShot.id, ...snapShot.data() } });
-          console.log(this.state);
         });
       } else {
         // useAuth=null in case user is not logged in
