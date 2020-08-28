@@ -49,7 +49,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
   const collectionRef = firestore.collection(collectionKey);
   console.log(collectionRef);
   console.log(objectsToAdd);
-  /* const batch = firestore.batch();
+  const batch = firestore.batch();
   objectsToAdd.forEach((object) => {
     // gives new document collection reference
     const newDocRef = collectionRef.doc();
@@ -60,7 +60,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
   // commit entire group of documents
   // it returns promise
-  await batch.commit(); */
+  await batch.commit();
 };
 
 export const auth = firebase.auth();
