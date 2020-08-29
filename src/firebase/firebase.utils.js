@@ -63,6 +63,27 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
   await batch.commit();
 };
 
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const tranformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  // convert [{sneakers...},{jackets...}] into {sneakers: {...sneakers}, jackets: {...jackets}}
+  // 2nd arg. empty object is initial value of accumulator
+  // which will be filled with key-value pairs as shown above example
+  return tranformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
