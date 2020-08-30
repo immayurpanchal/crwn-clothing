@@ -10,7 +10,7 @@ const StripeButton = (props) => {
 	// Pass this token to backend for successful payment
 	const onToken = (token) => {
 		axios({
-			url: 'payment',
+			url: `${process.env.REACT_APP_PAYMENT_URL}/payment`,
 			method: 'POST',
 			data: {
 				amount: priceForStripe,
