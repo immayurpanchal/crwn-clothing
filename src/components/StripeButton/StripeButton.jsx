@@ -1,16 +1,22 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { removeAllCartItems } from '../../redux/cart/cart.actions';
 
 const StripeButton = (props) => {
-	const { price } = props;
+	const { price, history, removeAllCartItems } = props;
 	const priceForStripe = price * 100;
 	const publishableKey = 'pk_test_wKdTXJVjDKfLeNCkPK0pTFJk00RwisgQeD';
 
 	// Pass this token to backend for successful payment
 	const onToken = (token) => {
+		const paymentUrl = process.env.REACT_APP_PAYMENT_URL || 'https://crwn-payment-server.herokuapp.com';
+
 		axios({
-			url: `${process.env.REACT_APP_PAYMENT_URL}/payment`,
+			url: `${paymentUrl}/payment`,
 			method: 'POST',
 			data: {
 				amount: priceForStripe,
@@ -18,7 +24,9 @@ const StripeButton = (props) => {
 			},
 		})
 			.then((res) => {
+				removeAllCartItems();
 				alert('Payment Successful!');
+				history.push('/');
 			})
 			.catch((err) => {
 				console.log('Payment Error: ');
@@ -44,4 +52,8 @@ const StripeButton = (props) => {
 	);
 };
 
-export default StripeButton;
+const mapDispatchToProps = (dispatch) => ({
+	removeAllCartItems: () => dispatch(removeAllCartItems()),
+});
+
+export default compose(connect(null, mapDispatchToProps), withRouter)(StripeButton);
