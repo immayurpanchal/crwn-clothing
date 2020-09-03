@@ -1,6 +1,10 @@
 import React from 'react';
-import CollectionItem from '../../components/CollectionItem';
-import { CollectionItemsContainer, CollectionPageContainer, CollectionTitle } from './Collection.styles';
+import CollectionItemGQL from '../../components/CollectionItem/CollectionItem.container';
+import {
+	CollectionItemsContainer,
+	CollectionPageContainer,
+	CollectionTitle,
+} from './Collection.styles';
 
 const Collection = (props) => {
 	const { collection } = props;
@@ -10,7 +14,7 @@ const Collection = (props) => {
 			<CollectionTitle>{title}</CollectionTitle>
 			<CollectionItemsContainer>
 				{items.map((item) => (
-					<CollectionItem key={item.id} item={item} />
+					<CollectionItemGQL key={item.id} item={item} />
 				))}
 			</CollectionItemsContainer>
 		</CollectionPageContainer>

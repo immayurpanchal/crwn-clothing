@@ -25,26 +25,11 @@ const client = new ApolloClient({
 	typeDefs,
 });
 
-/* client
-	.query({
-		query: gql`
-			{
-				getCollectionsByTitle(title: "Hats") {
-					id
-					title
-					items {
-						id
-						name
-					}
-				}
-			}
-		`,
-	})
-	.then((res) => console.log(res)); */
-
 client.writeData({
 	data: {
 		cartHidden: true,
+		cartItems: [],
+		itemCount: 0,
 	},
 });
 

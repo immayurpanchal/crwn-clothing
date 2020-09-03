@@ -1,6 +1,8 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import * as compose from 'lodash.flowright';
+
 import CartIcon from './CartIcon';
 
 const TOGGLE_CART_HIDDEN = gql`
@@ -9,12 +11,16 @@ const TOGGLE_CART_HIDDEN = gql`
 	}
 `;
 
-const CartIconGQL = () => {
-	return (
-		<Mutation mutation={TOGGLE_CART_HIDDEN}>
-			{(toggleCartHidden) => <CartIcon toggleCartHidden={toggleCartHidden} />}
-		</Mutation>
-	);
-};
+const GET_ITEM_COUNT = gql`
+	{
+		itemCount @client
+	}
+`;
 
-export default CartIconGQL;
+const CartIconGQL = ({ data: { itemCount }, toggleCartHidden }) => (
+	<CartIcon toggleCartHidden={toggleCartHidden} itemCount={itemCount} />
+);
+export default compose(
+	graphql(GET_ITEM_COUNT),
+	graphql(TOGGLE_CART_HIDDEN, { name: 'toggleCartHidden' })
+)(CartIconGQL);

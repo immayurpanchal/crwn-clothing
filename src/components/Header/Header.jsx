@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import { selectCurrentUser } from '../../redux/user/user.selector';
-import CartDropdown from '../CartDropdown/CartDropdown';
 import CartIconGQL from '../CartIcon/CartIcon.container';
 import { HeaderContainer, LogoContainer, OptionLink, OptionsContainer } from './Header.styles';
+import CartDropdownGQL from '../CartDropdown/CartDropdown.container';
 
 const Header = ({ currentUser, hidden }) => {
 	return (
@@ -26,7 +26,7 @@ const Header = ({ currentUser, hidden }) => {
 				)}
 				<CartIconGQL />
 			</OptionsContainer>
-			{hidden ? null : <CartDropdown />}
+			{hidden ? null : <CartDropdownGQL />}
 		</HeaderContainer>
 	);
 };
